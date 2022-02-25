@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('components/head') -%>
+</head>
+<body class="bg-blue">
+  <div class="row align-items-center">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4 login-module">
+      <h1>Log In</h1>
+      <p>Please choose from any of the following login options*</p>
+      <!-- LNGS -->
+      <button type="button" data-toggle="modal" data-target="#LNGSmodal" class="btn btn-linkedin login-btn">
+        <i class="fas fa-globe-americas" style="float:left;font-size:x-large;"></i>
+        Login with LNGS
+      </button>
+      <!--Github-->
+      <a href="/shifts/auth/github">
+        <button type="button" class="btn btn-github login-btn">
+          <i class="fab fa-github pr-1" style="float:left;font-size:x-large;"></i>
+          Login with GitHub
+        </button>
+      </a>
+      <br>
+      <br>
+      <p>
+        *For use of either the LNGS or Github login, you must have logged in previously this way 
+        to the <a href="https://xenonnt.lngs.infn.it/login" class="alert-link">DAQ website</a>
+      </p>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</body>

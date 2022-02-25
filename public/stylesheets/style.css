@@ -1,0 +1,27 @@
+.bg-blue {
+    background-color: #06094E;
+}
+
+.btn-blue {
+    background-color: #497DD2;
+}
+
+/* Page specific */
+/* Log in page */
+.login-module {
+    margin-top: 100px!important;
+    background-color: #ffffff;
+    padding: 40px 50px 40px 50px !important;
+    border-radius: 3px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.80);
+}
+.login-module h1 {
+    font-size: 24px;
+}
+.login-btn {
+    width:100%;
+    padding:8px;
+    margin-top:10px;
+    font-size:medium;
+}
