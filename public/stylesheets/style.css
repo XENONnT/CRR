@@ -12,6 +12,14 @@
     padding-right: 32px;
 }
 
+.mt-24 {
+    margin-top: 24px;
+}
+
+.mb-24 {
+    margin-bottom: 24px;
+}
+
 /* Page specific */
 /* Log in page */
 .login-module {
@@ -30,4 +38,23 @@
     padding:8px;
     margin-top:10px;
     font-size:medium;
+}
+
+.request__query-box {
+    display: flex;
+    background-color: white;
+    box-shadow: -4px 8px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 5px;
+}
+
+.request__query-form {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+}
+
+.request__query-input {
+    width: 100%;
+    border: none;
+    box-shadow: none;
 }
