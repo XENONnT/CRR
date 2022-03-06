@@ -6,6 +6,12 @@
     background-color: #497DD2;
 }
 
+.navbar-custom {
+    background-color: #0C1178;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
 /* Page specific */
 /* Log in page */
 .login-module {
