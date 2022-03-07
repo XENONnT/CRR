@@ -47,14 +47,24 @@
     border-radius: 5px;
 }
 
+.request__query-box--input {
+    width: 100%;
+    border: none;
+    box-shadow: none;
+}
+
 .request__query-form {
     display: flex;
     width: 100%;
     padding: 12px;
 }
 
-.request__query-input {
-    width: 100%;
-    border: none;
-    box-shadow: none;
+.request__query-form--row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.request__query-form--dropdowns {
+    min-width: 200px;
 }
