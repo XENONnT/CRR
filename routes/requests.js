@@ -10,4 +10,10 @@ router.get('/view-requests', function(req, res) {
     res.send('Table of requests')
 });
 
+router.post('/run-list-preview/:query', function(req, res) {
+    var query = req.params.query;
+    console.log(query)
+    console.log("Hi")
+});
+
 module.exports = router;

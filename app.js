@@ -1,7 +1,27 @@
 const express = require('express')
 var path = require('path');
+var dotenv = require('dotenv');
+const MongoClient = require('mongodb').MongoClient;
+
+dotenv.config();
+
 const app = express();
 const port = 3000;
+
+// Connect mongo
+const mongoURI = process.env.MONGO_URI;
+var db;
+MongoClient.connect(mongoURI, {useUnifiedTopology: true}, (err, db) => {
+  db = db.db('xenon');
+  console.log(`mongoDB is connected to remote mongo`),
+  err => {console.log(err);}
+});
+
+// Make our db accessible to our router
+app.use((req,res,next) => {
+  req.db = db;
+  next();
+});
 
 // Routers for subsites
 var requestsRouter = require('./routes/requests');

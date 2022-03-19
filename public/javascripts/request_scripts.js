@@ -57,7 +57,7 @@ function CheckQuery() {
  * @param {String} query A string that contains the query to the runs db
  */
 function InitializeRunListTable(query) {
-  ajax_str = '/requests/run-list-preview?' + query
+  ajax_str = '/requests/run-list-preview/' + query
   console.log(ajax_str)
   var data = {
     ajax: {
