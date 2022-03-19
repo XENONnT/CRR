@@ -2,21 +2,38 @@
 <html lang="en">
 <head>
   <%- include('components/head') -%>
+  <script src="/javascripts/request_scripts.js" type="text/javascript"></script>
 </head>
 <body class="bg-light">
-  <%- include('components/navbar') -%>
-  <div class="container">
-    <div class="row mt-24 mb-24">
-      <%- include('components/request__query-box') -%>
+  <section class="bg-bright-blue pb-24">
+    <%- include('components/navbar') -%>
+    <div class="container empty-space-100" id="empty-space-1"></div>
+    <div class="container pt-72">
+      <div class="row mt-24 mb-24">
+        <h1 class="white-95">Make a request.</h1>
+        <%- include('components/request__query-box') -%>
+      </div>
     </div>
-    <div class="row mb-24">
-      <table id="request__run-list-preview"></table>
+    <div class="container empty-space-100" id="empty-space-2"></div>
+  </section>
+  <section id="section-2" style="display:none">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="row mb-24 mt-36">
+          <div class="request__query-form--run-list">
+            <p class="pl-10">Run List Preview</p>
+            <table id="request__run-list-preview"></table>
+          </div>
+        </div>
+        <div class="row mb-24">
+          <%- include('components/request__dropdowns') -%>
+        </div>
+      </div>
     </div>
-    <div class="row mb-24">
-      <%- include('components/request__dropdowns') -%>
-    </div>
-  </div>
+  </section>
 </body>
 <script>
-  
+  $(document).ready( function () {
+    
+  } );
 </script>
