@@ -11,9 +11,17 @@ router.get('/view-requests', function(req, res) {
 });
 
 router.post('/run-list-preview/:query', function(req, res) {
-    var query = req.params.query;
+    var query = JSON.parse(req.params.query);
+    console.log(typeof(query))
     console.log(query)
-    console.log("Hi")
+    var db = req.xenon_db;
+    var collection = db.collection('runs');
+
+    collection.find(query).toArray(function(e, doc) {
+        console.log(e);
+        console.log(doc);
+        res.send(JSON.stringify({"data": doc}));
+    });
 });
 
 module.exports = router;

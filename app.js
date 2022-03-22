@@ -10,16 +10,16 @@ const port = 3000;
 
 // Connect mongo
 const mongoURI = process.env.MONGO_URI;
-var db;
+var xenon_db;
 MongoClient.connect(mongoURI, {useUnifiedTopology: true}, (err, db) => {
-  db = db.db('xenon');
+  xenon_db = db.db('xenon');
   console.log(`mongoDB is connected to remote mongo`),
   err => {console.log(err);}
 });
 
 // Make our db accessible to our router
 app.use((req,res,next) => {
-  req.db = db;
+  req.xenon_db = xenon_db;
   next();
 });
 

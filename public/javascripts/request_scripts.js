@@ -57,16 +57,25 @@ function CheckQuery() {
  * @param {String} query A string that contains the query to the runs db
  */
 function InitializeRunListTable(query) {
-  ajax_str = '/requests/run-list-preview/' + query
+  ajax_str = '/run-list-preview/' + query
   console.log(ajax_str)
-  var data = {
+  var table = $('#request__run-list-preview').DataTable({
     ajax: {
       url: ajax_str,
       type: 'POST',
+      error: function(xhr, status, error) {
+        console.log('error: ' + status + ' ' + error);
+      },
     }, 
     columns: [
-
-    ]
-  }
-  $('#request__run-list-preview').DataTable(data);
+      { data: "number" },
+      { data: "start" }
+    ],
+    columnDefs: [
+      { title: 'Run Number', targets: 0 },
+      { title: 'Start', targets: 1 }
+    ],
+    destroy: true
+  });
 }
+
