@@ -59,23 +59,32 @@ function CheckQuery() {
 function InitializeRunListTable(query) {
   ajax_str = '/run-list-preview/' + query
   console.log(ajax_str)
-  var table = $('#request__run-list-preview').DataTable({
-    ajax: {
-      url: ajax_str,
-      type: 'POST',
-      error: function(xhr, status, error) {
-        console.log('error: ' + status + ' ' + error);
-      },
-    }, 
-    columns: [
-      { data: "number" },
-      { data: "start" }
-    ],
-    columnDefs: [
-      { title: 'Run Number', targets: 0 },
-      { title: 'Start', targets: 1 }
-    ],
-    destroy: true
+  var arr = [];
+  $.ajax({
+    url: ajax_str,
+    type: 'POST',
+    dataType: 'json',
+    async: false,
+    success: function(obj){
+      console.log(obj['data'])
+      obj['data'].forEach(item => arr.push(item.number));
+      var table = $('#request__run-list-preview').DataTable({
+        data: obj['data'],
+        columns: [
+          { data: "number" },
+          { data: "start" }
+        ],
+        columnDefs: [
+          { title: 'Run Number', targets: 0 },
+          { title: 'Start', targets: 1 }
+        ],
+        destroy: true
+      });
+    },
+    error: function(xhr, status, error) {
+      console.log('error: ' + status + ' ' + error);
+    }
   });
+  console.log(JSON.stringify(arr));
+  $('#runNumbers').val(JSON.stringify(arr));
 }
-

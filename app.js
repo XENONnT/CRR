@@ -2,6 +2,7 @@ const express = require('express')
 var path = require('path');
 var dotenv = require('dotenv');
 const MongoClient = require('mongodb').MongoClient;
+var session = require('express-session');
 
 dotenv.config();
 
@@ -22,6 +23,23 @@ app.use((req,res,next) => {
   req.xenon_db = xenon_db;
   next();
 });
+
+// Set up express session for passport.js sessions
+app.use(session({
+  secret: process.env.EXPRESS_SESSION,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+  },
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Passport Auth
+var passport = require("passport");
+require("./config/passport");
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // Routers for subsites
 var requestsRouter = require('./routes/requests');
