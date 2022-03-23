@@ -18,7 +18,6 @@ function CheckQuery() {
       }
       arr = JSON.parse(query)
       doc = {'number': {'$in': arr}}
-      console.log(doc)
       str_query = JSON.stringify(doc)
     } else if (query[0] == '{') {
       try {
@@ -58,7 +57,6 @@ function CheckQuery() {
  */
 function InitializeRunListTable(query) {
   ajax_str = `/run-list-preview/${query}`
-  console.log(ajax_str)
   var arr = [];
   $.ajax({
     url: ajax_str,
@@ -66,7 +64,6 @@ function InitializeRunListTable(query) {
     dataType: 'json',
     async: false,
     success: function(obj){
-      console.log(obj['data'])
       obj['data'].forEach(item => arr.push(item.number));
       var table = $('#request__run-list-preview').DataTable({
         data: obj['data'],
@@ -85,7 +82,6 @@ function InitializeRunListTable(query) {
       console.log('error: ' + status + ' ' + error);
     }
   });
-  console.log(JSON.stringify(arr));
   $('#runNumbers').val(JSON.stringify(arr));
 }
 
@@ -113,7 +109,6 @@ function InitializeEnvironmentDropdown(url) {
 }
 
 function InitializeContextDropdown(env_tag) {
-  console.log(env_tag);
   $('#context').find('option').remove();
   var query = JSON.stringify({'tag': env_tag});
   var ajax_str = `/get-context/${query}`;
@@ -122,14 +117,51 @@ function InitializeContextDropdown(env_tag) {
     type: 'POST',
     dataType: 'json',
     success: function(data){
+      $('#context').append($('<option>', {
+        value: '',
+        text: 'Select one...'
+      }));
       for (var i in data) {
         var doc = data[i];
         var context = doc['name'];
-        console.log(context);
         $('#context').append($('<option>', {
           value: context,
           text: context
         }));
+      }
+    },
+    error: function(xhr, status, error) {
+      console.log('error: ' + status + ' ' + error);
+    }
+  });
+}
+
+function InitializeTypeDropdown(context) {
+  $('#type').find('option').remove();
+  var query = JSON.stringify({'name': context});
+  var ajax_str = `/get-context/${query}`;
+  $.ajax({
+    url: ajax_str,
+    type: 'POST',
+    dataType: 'json',
+    success: function(data){
+      for (var i in data) {
+        var doc = data[i];
+        var hashes = doc['hashes'];
+        for (var type in hashes) {
+          if (type === 'event_basics') {
+            $('#type').append($('<option>', {
+              selected: 'selected',
+              value: type,
+              text: type
+            }));
+          } else {
+            $('#type').append($('<option>', {
+              value: type,
+              text: type
+            }));
+          }
+        }
       }
     },
     error: function(xhr, status, error) {

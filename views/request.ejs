@@ -35,8 +35,10 @@
 <script>
   $(document).ready(function () {
     $("#environment").change(function() {
-      console.log('Yes');
       InitializeContextDropdown($(this).val());
+    });
+    $("#context").change(function() {
+      InitializeTypeDropdown($(this).val());
     });
     InitializeEnvironmentDropdown('<%= url %>');
   });
