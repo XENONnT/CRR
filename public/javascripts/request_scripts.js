@@ -57,7 +57,7 @@ function CheckQuery() {
  * @param {String} query A string that contains the query to the runs db
  */
 function InitializeRunListTable(query) {
-  ajax_str = '/run-list-preview/' + query
+  ajax_str = `/run-list-preview/${query}`
   console.log(ajax_str)
   var arr = [];
   $.ajax({
@@ -98,7 +98,8 @@ function InitializeRunListTable(query) {
 function InitializeEnvironmentDropdown(url) {
   $.getJSON(url, function(data) {
     for (var i in data) {
-      var ref = data[i]['ref'];
+      var doc = data[i];
+      var ref = doc['ref'];
       // This assumes that the exact string 'refs/tags/' precedes the environment tag
       var tag = ref.slice(10);
 
@@ -107,6 +108,32 @@ function InitializeEnvironmentDropdown(url) {
         value: tag,
         text: tag
     }));
+    }
+  });
+}
+
+function InitializeContextDropdown(env_tag) {
+  console.log(env_tag);
+  $('#context').find('option').remove();
+  var query = JSON.stringify({'tag': env_tag});
+  var ajax_str = `/get-context/${query}`;
+  $.ajax({
+    url: ajax_str,
+    type: 'POST',
+    dataType: 'json',
+    success: function(data){
+      for (var i in data) {
+        var doc = data[i];
+        var context = doc['name'];
+        console.log(context);
+        $('#context').append($('<option>', {
+          value: context,
+          text: context
+        }));
+      }
+    },
+    error: function(xhr, status, error) {
+      console.log('error: ' + status + ' ' + error);
     }
   });
 }
