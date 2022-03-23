@@ -88,3 +88,25 @@ function InitializeRunListTable(query) {
   console.log(JSON.stringify(arr));
   $('#runNumbers').val(JSON.stringify(arr));
 }
+
+/**
+ * Performs an AJAX call to a github page which lists all the
+ * environments in an array of JSON objects. To populate the 
+ * environments we use the value at 'ref' and only use the tag
+ * included after "refs/tags/".
+ */
+function InitializeEnvironmentDropdown(url) {
+  $.getJSON(url, function(data) {
+    for (var i in data) {
+      var ref = data[i]['ref'];
+      // This assumes that the exact string 'refs/tags/' precedes the environment tag
+      var tag = ref.slice(10);
+
+      // add option to the environment dropdown
+      $('#environment').append($('<option>', {
+        value: tag,
+        text: tag
+    }));
+    }
+  });
+}

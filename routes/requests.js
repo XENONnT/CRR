@@ -3,7 +3,7 @@ var router = express.Router();
 
 // Home page: Page where people make requests
 router.get('/', function(req, res) {
-    res.render('request', {page: 'Make Requests', menuId: 'home', user: req.user});
+    res.render('request', {page: 'Make Requests', menuId: 'home', user: req.user, url: process.env.ENVS_URL});
 });
 
 router.get('/view-requests', function(req, res) {
