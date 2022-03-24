@@ -38,4 +38,25 @@ router.post('/get-context/:query', function(req, res) {
     });
 });
 
+router.post('/submit-request', function(req, res) {
+    console.log(req.body)
+    var db = req.xenon_db;
+    var collection = db.collection('requests');
+    var request_doc = {
+        run_numbers: req.body.runNumbers,
+        user: req.user.lngs_ldap_uid,
+        request_date: new Date(),
+        env: req.body.environment,
+        context: req.body.context,
+        type: req.body.type,
+        priority: req.body.priority,
+        comments: req.body.comments,
+        progress: 0,
+        completed: false
+    };
+    console.log(request_doc);
+    
+
+});
+
 module.exports = router;

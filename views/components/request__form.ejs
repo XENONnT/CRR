@@ -1,9 +1,9 @@
-<form class="request__query-form--form">
+<form method='POST' action='/submit-request' class="request__query-form--form">
 	<div class="form-row request__query-form--row">
     <input type="hidden" id="runNumbers" name="runNumbers">
 		<div class="col request__query-form--dropdowns">
 			<label class="request__query-form--label" for="priority">Priority</label>
-			<select id="priority" class="form-control">
+			<select id="priority" class="form-control" required>
         <option selected>Select one...</option>
         <option>10</option>
         <option>9</option>
@@ -25,19 +25,19 @@
 		</div> -->
 		<div class="col request__query-form--dropdowns">
 			<label class="request__query-form--label" for="environment">Environment</label>
-			<select id="environment" class="form-control">
+			<select id="environment" class="form-control" required>
         <option selected>Select one...</option>
       </select>
 		</div>
 		<div class="col request__query-form--dropdowns">
 			<label class="request__query-form--label" for="context">Context</label>
-			<select id="context" class="form-control">
+			<select id="context" class="form-control" required>
         <option selected>Select one...</option>
       </select>
 		</div>
     <div class="col request__query-form--dropdowns">
 			<label class="request__query-form--label" for="type">Type</label>
-			<select id="type" class="form-control">
+			<select id="type" class="form-control" required>
         <option selected>Select one...</option>
       </select>
 		</div>
