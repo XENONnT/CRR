@@ -71,7 +71,7 @@ router.post('/ldap', function(req, res, next) {
     console.log(user);
     if (user) { // success
       req.logIn(user, function(e) {
-        res.redirect(req.session.returnTo || '/profile');
+        res.redirect(req.session.returnTo || '/');
       });
     } else {
       console.log(`Info arg is ${info}`)
@@ -98,7 +98,7 @@ router.get('/github/callback',
     failureRedirect: '/auth/login-attempt-1cn9rbu94gi4n'
   }),
   function(req, res) {
-    res.redirect(req.session.returnTo || '/profile');
+    res.redirect(req.session.returnTo || '/');
 });
 
 // auth logout page

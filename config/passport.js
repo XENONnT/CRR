@@ -68,33 +68,9 @@ function UpdateUnique(mongo_doc, username){
     })
 }
 
-function GenerateDAQID(mongo_doc){
-    // Just return the last name in lower case. In case not unique add the string 'xe' 
-    // until it is
-
-    if(typeof mongo_doc['daq_id'] !== 'undefined')
-	return new Promise(resolve => {
-	    resolve(mongo_doc['daq_id']);
-	});
-
-    var last_name = mongo_doc['last_name'];
-    var username = last_name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-    // Check uniqueness
-    return new Promise(resolve => {
-        resolve(UpdateUnique(mongo_doc, username));
-        });
-}
-
 async function PopulateProfile(mongo_doc, github_profile, ldap_profile, callback){
 
     var ret_profile = {};
-
-    // This step important. We need a unique identifier for each user. The user
-    // doesn't actually need to see this but it's important for some internal 
-    // things.     
-    ret_profile['daq_id'] = await GenerateDAQID(mongo_doc);
-
     // This allows people to use github functions later on.
     console.log(ret_profile);
 
@@ -163,36 +139,36 @@ passport.use(new GitHubStrategy({
                     }
                 });
             }
-        }).catch((e) => {
-            console.log(e)
-            octokit.orgs.checkMembershipForUser({
-                org: "XENONnT",
-                username: github_login,
-            }).then((response) => {
-                if (response.status == 204) {
-                    use_db.collection('users').find({"github": profile._json.login}).toArray((e, docs) => {
-                        if(docs.length===0){
-                            logToFile(`${github_login} is a member of XENONnT but was not found in the DB.`);
-                            return done(null, false, "Couldn't find user in DB");
-                        } else {
-                            var doc = docs[0]
-                            PopulateProfile(doc, profile, {}, function(ret_profile){
-                                use_db.collection('users').findOneAndUpdate({"github": profile._json.login},
-                                                {"$set": { "picture_url": profile._json.avatar_url,
-                                                        "github_home": profile.html_url},
-                                                }).then(() => console.log("update done"));
-                                console.log(ret_profile)
-                                return done(null, ret_profile)
-                            })
-                        }
-                    });
+         })//.catch((e) => {
+        //     console.log(e)
+        //     octokit.orgs.checkMembershipForUser({
+        //         org: "XENONnT",
+        //         username: github_login,
+        //     }).then((response) => {
+        //         if (response.status == 204) {
+        //             use_db.collection('users').find({"github": profile._json.login}).toArray((e, docs) => {
+        //                 if(docs.length===0){
+        //                     logToFile(`${github_login} is a member of XENONnT but was not found in the DB.`);
+        //                     return done(null, false, "Couldn't find user in DB");
+        //                 } else {
+        //                     var doc = docs[0]
+        //                     PopulateProfile(doc, profile, {}, function(ret_profile){
+        //                         use_db.collection('users').findOneAndUpdate({"github": profile._json.login},
+        //                                         {"$set": { "picture_url": profile._json.avatar_url,
+        //                                                 "github_home": profile.html_url},
+        //                                         }).then(() => console.log("update done"));
+        //                         console.log(ret_profile)
+        //                         return done(null, ret_profile)
+        //                     })
+        //                 }
+        //             });
                     
-                }
-            }).catch((e) => {
-                logToFile(`${github_login} is not a member of XENON1T or XENONnT and was not found in the DB. Additional errors: ${e}`);
-                return done(null, false);
-            }); 
-        });     
+        //         }
+        //     }).catch((e) => {
+        //         logToFile(`${github_login} is not a member of XENON1T or XENONnT and was not found in the DB. Additional errors: ${e}`);
+        //         return done(null, false);
+        //     }); 
+        // });     
     });
 }));
 

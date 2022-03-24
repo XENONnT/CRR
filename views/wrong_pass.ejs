@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('components/head') -%>
+</head>
+<body class="bg-blue">
+  <div class="text-center">
+    <div class="row" style="height: 50px;"></div>
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4 login-module">
+        <h3>Shift Management Login</h3>
+        <h5>Please choose from any of the following login options*</h5>
+        <br>
+        <div class="alert alert-danger" role="alert">
+          <% if (link != null) {%>
+              <%= message %> <a href="<%= link %>" class="alert-link">DAQ website</a>
+          <%} else {%>
+              <%= message %>
+          <%}%>
+        </div>
+        <!-- LNGS -->
+        <button type="button" data-toggle="modal" data-target="#LNGSmodal" class="btn btn-linkedin" style="width:90%;padding:8px;margin-top:10px;font-size:medium;"><i class="fas fa-globe-americas" style="float:left;font-size:x-large;"></i> Login with LNGS</button>
+        <!--Github-->
+        <a href="/auth/github"><button type="button" class="btn btn-github" style="width:90%;padding:10px;margin-top:10px;font-size:medium;"><i class="fab fa-github pr-1" style="float:left;font-size:x-large;"></i> Login with GitHub</button></a>
+        <p style="margin-top:20px">*If you are repeatedly having issues logging in with LNGS or GitHub please use the workaround as described in the <a href="https://xe1t-wiki.lngs.infn.it/doku.php?id=xenon:xenonnt:webapp#addressing_login_issues" class="alert-link">wiki page</a></p>
+      </div>
+      <div class="col-sm-4"></div>
+    </div>
+  </div>
+  <%- include('components/login__lngs-modal') -%>
+</body>
+</html>

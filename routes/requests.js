@@ -1,16 +1,22 @@
 var express = require('express');
 var router = express.Router();
 
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    req.session.returnTo = req.originalUrl;
+    return res.redirect('/auth/login');
+}
+
 // Home page: Page where people make requests
-router.get('/', function(req, res) {
+router.get('/', ensureAuthenticated, function(req, res) {
     res.render('request', {page: 'Make Requests', menuId: 'home', user: req.user, url: process.env.ENVS_URL});
 });
 
-router.get('/view-requests', function(req, res) {
+router.get('/view-requests', ensureAuthenticated, function(req, res) {
     res.send('Table of requests')
 });
 
-router.post('/run-list-preview/:query', function(req, res) {
+router.post('/run-list-preview/:query', ensureAuthenticated, function(req, res) {
     var query = JSON.parse(req.params.query);
     console.log(typeof(query))
     console.log(query)
@@ -24,7 +30,7 @@ router.post('/run-list-preview/:query', function(req, res) {
     });
 });
 
-router.post('/get-context/:query', function(req, res) {
+router.post('/get-context/:query', ensureAuthenticated, function(req, res) {
     var query = JSON.parse(req.params.query);
     console.log(typeof(query))
     console.log(query)
@@ -38,10 +44,11 @@ router.post('/get-context/:query', function(req, res) {
     });
 });
 
-router.post('/submit-request', function(req, res) {
+router.post('/submit-request', ensureAuthenticated, function(req, res) {
     console.log(req.body)
     var db = req.xenon_db;
     var collection = db.collection('requests');
+    console.log(req.body)
     var request_doc = {
         run_numbers: req.body.runNumbers,
         user: req.user.lngs_ldap_uid,
