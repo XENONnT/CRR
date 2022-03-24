@@ -50,7 +50,7 @@ router.post('/submit-request', ensureAuthenticated, function(req, res) {
     var collection = db.collection('requests');
     console.log(req.body)
     var request_doc = {
-        run_numbers: req.body.runNumbers,
+        run_numbers: JSON.parse(req.body.runNumbers),
         user: req.user.lngs_ldap_uid,
         request_date: new Date(),
         env: req.body.environment,
@@ -63,7 +63,9 @@ router.post('/submit-request', ensureAuthenticated, function(req, res) {
     };
     console.log(request_doc);
     
+    collection.insertOne(request_doc);
 
+    return(res.redirect('/'))
 });
 
 module.exports = router;
