@@ -9,7 +9,7 @@ function InitializeViewsTable() {
       type: 'POST'
     },
     columns: [
-      { defaultContent: '' },
+      { defaultContent: '<button type="button" class="btn btn-primary btn-sm">Show</button>' },
       { data: "run_numbers" },
       { data: "user" },
       { data: "request_date" },
