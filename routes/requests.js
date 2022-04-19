@@ -13,7 +13,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
 });
 
 router.get('/view-requests', ensureAuthenticated, function(req, res) {
-    res.send('Table of requests')
+    res.render('view', {page: 'View Requests', menuId: 'home', user: req.user, url: process.env.ENVS_URL});
 });
 
 router.post('/run-list-preview/:query', ensureAuthenticated, function(req, res) {
@@ -66,6 +66,15 @@ router.post('/submit-request', ensureAuthenticated, function(req, res) {
     collection.insertOne(request_doc);
 
     return(res.redirect('/'))
+});
+
+router.post('/get-requests', ensureAuthenticated, function(req,res) {
+    var db = req.xenon_db;
+    var collection = db.collection('requests');
+
+    collection.find({}).toArray(function(e, doc) {
+        res.send(JSON.stringify({'data': doc}));
+    });
 });
 
 module.exports = router;

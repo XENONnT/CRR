@@ -1,6 +1,17 @@
 /**
+ * Function that checks the format of the query inputted to the query box.
  * 
- * @returns 
+ * It accepts the following forms:
+ *    9                   (Just one integer)
+ *    {"run_number": 9}   (A valid MongoDB query)
+ *    [1, 2, 3]           (An array of integers)
+ * 
+ * The structure must be in this style in order for the form to be recognized
+ * This means that the array of integers MUST have the brackets [] in order 
+ * to be parsed correctly.
+ * 
+ * If the query is valid it will initialize the runlist based on the query
+ * and show the relevant sections. 
  */
 function CheckQuery() {
   var query = $('#query').val();
@@ -90,6 +101,8 @@ function InitializeRunListTable(query) {
  * environments in an array of JSON objects. To populate the 
  * environments we use the value at 'ref' and only use the tag
  * included after "refs/tags/".
+ * 
+ * @param {String} url A string with the URL from which the JSON is retrieved
  */
 function InitializeEnvironmentDropdown(url) {
   $.getJSON(url, function(data) {
@@ -108,6 +121,14 @@ function InitializeEnvironmentDropdown(url) {
   });
 }
 
+/**
+ * Function that makes an AJAX POST request to MongoDB and 
+ * returns an array of JSON documents for different contexts given 
+ * an environment tag. The name each context is then taken and used
+ * to populate the contexts dropdown list.
+ * 
+ * @param {String} env_tag 
+ */
 function InitializeContextDropdown(env_tag) {
   $('#context').find('option').remove();
   var query = JSON.stringify({'tag': env_tag});
@@ -136,6 +157,15 @@ function InitializeContextDropdown(env_tag) {
   });
 }
 
+/**
+ * Function that makes an AJAX POST request to MongoDB and 
+ * returns an array of JSON documents for different types given 
+ * a context. The name each of type is then taken and used
+ * to populate the types dropdown list. This function also sets 
+ * event_basics to the default selected type.
+ * 
+ * @param {String} context 
+ */
 function InitializeTypeDropdown(context) {
   $('#type').find('option').remove();
   var query = JSON.stringify({'name': context});
