@@ -9,7 +9,7 @@ function InitializeViewsTable() {
       type: 'POST'
     },
     columns: [
-      { defaultContent: '<button type="button" class="btn btn-primary btn-sm">Show</button>' },
+      { defaultContent: "" },
       { data: "run_numbers" },
       { data: "user" },
       { data: "request_date" },
@@ -23,7 +23,12 @@ function InitializeViewsTable() {
       { defaultContent: '' }
     ],
     columnDefs: [
-      { title: 'Details', targets: 0},
+      { title: 'Details', 
+        targets: 0,
+        render: function(data, type, row) {
+          return `<button type="button" class="btn btn-primary btn-sm" onclick='ShowDetail(${JSON.stringify(row)});'>Show</button>`
+        }
+      },
       { title: 'Run', targets: 1 },
       { title: 'User', targets: 2 },
       { title: 'Request Date', 
@@ -44,8 +49,6 @@ function InitializeViewsTable() {
         title: 'Status', 
         targets: 11,
         render: function(data, type, row) {
-          console.log(data)
-          console.log(row)
           if (row['completed'] == false && row['progress'] == 0) {
             return `<span class="badge view__label submitted">Submitted</span>`;
           } else if (row['error']) {
@@ -60,4 +63,17 @@ function InitializeViewsTable() {
     ],
     
   });
+}
+
+/**
+ * Takes as input the full JSON data for an entry in the requests 
+ * database and opens a modal that displays the formatted data.
+ * 
+ * @param {Object} data 
+ */
+function ShowDetail(data) {
+  inner = JSON.stringify(data, null, 4);
+  html = `<pre>${inner}</pre>`;
+  $('#detail-body').html(html);
+  $('#detailModal').modal('show');
 }
