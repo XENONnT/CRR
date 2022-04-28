@@ -30,6 +30,15 @@ router.post('/run-list-preview/:query', ensureAuthenticated, function(req, res) 
     });
 });
 
+router.post('/get-env', ensureAuthenticated, function(req, res) {
+    var db = req.xenon_db;
+    var collection = db.collection('contexts');
+
+    collection.distinct('tag', function(e, doc) {
+        res.send(JSON.stringify(doc));
+    });
+});
+
 router.post('/get-context/:query', ensureAuthenticated, function(req, res) {
     var query = JSON.parse(req.params.query);
     console.log(typeof(query))

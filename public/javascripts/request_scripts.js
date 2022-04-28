@@ -105,18 +105,22 @@ function InitializeRunListTable(query) {
  * @param {String} url A string with the URL from which the JSON is retrieved
  */
 function InitializeEnvironmentDropdown(url) {
-  $.getJSON(url, function(data) {
-    for (var i in data) {
-      var doc = data[i];
-      var ref = doc['ref'];
-      // This assumes that the exact string 'refs/tags/' precedes the environment tag
-      var tag = ref.slice(10);
-
-      // add option to the environment dropdown
-      $('#environment').append($('<option>', {
-        value: tag,
-        text: tag
-    }));
+  $.ajax({
+    url: '/get-env',
+    type: 'POST',
+    dataType: 'json',
+    success: function(data){
+      for (var i in data) {
+        var tag = data[i];
+        // add option to the environment dropdown
+        $('#environment').append($('<option>', {
+          value: tag,
+          text: tag
+        }));
+      }
+    },
+    error: function(xhr, status, error) {
+      console.log('error: ' + status + ' ' + error);
     }
   });
 }
