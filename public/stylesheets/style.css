@@ -68,6 +68,18 @@
   font-size:medium;
 }
 
+.login__modal {
+  padding: 10px 40px 30px 40px;
+}
+
+.login__modal-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 24px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+}
+
 .request__query-box {
   display: flex;
   background-color: white;
