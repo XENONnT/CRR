@@ -10,13 +10,15 @@ function InitializeViewsTable() {
     },
     columns: [
       { defaultContent: "" },
-      { data: "run_numbers" },
-      { data: "user" },
-      { data: "request_date" },
+      { data: "job_id" },
+      { data: "location" },
+      { data: "destination" },
+      { data: "run_id" },
+      { data: "submission_time" },
       { data: "env" },
       { data: "context" },
-      { data: "type" },
-      { data: "priority" },
+      { data: "data_type" },
+      { data: "lineage_hash"},
       { data: "progress" },
       { data: "completed" },
       { data: "error", defaultContent: ''},
@@ -29,10 +31,9 @@ function InitializeViewsTable() {
           return `<button type="button" class="btn btn-primary btn-sm" onclick='ShowDetail(${JSON.stringify(row)});'>Show</button>`
         }
       },
-      { title: 'Run', targets: 1 },
-      { title: 'User', targets: 2 },
-      { title: 'Request Date', 
-        targets: 3,
+      { title: 'Run ID', targets: 4 },
+      { title: 'Submission Time', 
+        targets: 5,
         render: function(data) {
           if (typeof(data) === 'undefined') {
             return '';
@@ -40,14 +41,13 @@ function InitializeViewsTable() {
           return moment(data).tz('Atlantic/St_Helena').format('YYYY-MM-DD hh:mm');
         }
       },
-      { title: 'Env.', targets: 4 },
-      { title: 'Context', targets: 5 },
-      { title: 'Type', targets: 6 },
-      { title: 'Priority', targets: 7 },
-      { targets: [8, 9, 10], visible: false },
+      { title: 'Env.', targets: 6 },
+      { title: 'Context', targets: 7 },
+      { title: 'Type', targets: 8 },
+      { targets: [1, 2, 3, 9, 10, 11, 12], visible: false },
       { 
         title: 'Status', 
-        targets: 11,
+        targets: -1,
         render: function(data, type, row) {
           if (row['completed'] == false && row['progress'] == 0) {
             return `<span class="badge view__label submitted">Submitted</span>`;
