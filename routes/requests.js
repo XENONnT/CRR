@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const { v4: uuidv4 } = require('uuid');
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
@@ -54,27 +55,52 @@ router.post('/get-context/:query', ensureAuthenticated, function(req, res) {
 });
 
 router.post('/submit-request', ensureAuthenticated, function(req, res) {
-    console.log(req.body)
     var db = req.xenon_db;
-    var collection = db.collection('requests');
-    console.log(req.body)
-    var request_doc = {
-        run_numbers: JSON.parse(req.body.runNumbers),
-        user: req.user.lngs_ldap_uid,
-        request_date: new Date(),
-        env: req.body.environment,
-        context: req.body.context,
-        type: req.body.type,
-        priority: req.body.priority,
-        comments: req.body.comments,
-        progress: 0,
-        completed: false
-    };
-    console.log(request_doc);
+    var collection = db.collection('processing_requests');
+    var contexts = db.collection('contexts');
+    var runs = JSON.parse(req.body.runNumbers);
     
-    collection.insertOne(request_doc);
+    var type = req.body.type
+    var env = req.body.environment
+    var context = req.body.context
+    var hash_names = `hashes.${type}`
 
-    return(res.redirect('/'))
+    query = '{ "name": "' + context + '", "tag": "' + env + '", "' + hash_names + '": {"$exists": true}}';
+
+    query_str = String(query)
+    
+    console.log(query)
+    console.log(query_str)
+    query_json = JSON.parse(query_str);
+
+    contexts.findOne(query_json).then(function(doc) {
+        console.log(`NEW DOC IS: ${JSON.stringify(doc)}`);
+        hash = doc['hashes'][type]
+
+        var run_requests = []
+
+        for (i in runs) {
+            console.log(runs[i])
+            var request_doc = {
+                data_type: type,
+                lineage_hash: hash,
+                run_id: String(runs[i]),
+                destination: req.body.destination,
+                user: req.user.lngs_ldap_uid,
+                request_date: new Date(),
+        
+                priority: parseInt(req.body.priority),
+                comments: (req.body.comments || ''),
+            };
+            run_requests.push(request_doc)
+        }
+        console.log(run_requests);
+        
+        collection.insertMany(run_requests);
+
+        return(res.redirect('/'))
+    });
+        
 });
 
 router.post('/get-requests', ensureAuthenticated, function(req,res) {

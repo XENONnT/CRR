@@ -1,10 +1,10 @@
 <form method='POST' action='/submit-request' class="request__query-form--form">
-	<div class="form-row request__query-form--row">
+  <div class="form-row request__query-form--row">
     <input type="hidden" id="runNumbers" name="runNumbers">
-		<div class="col request__query-form--dropdowns">
-			<label class="request__query-form--label" for="priority">Priority</label>
-			<select id="priority" name="priority" class="form-control" required>
-        <option selected>Select one...</option>
+    <div class="col request__query-form--dropdowns">
+      <label class="request__query-form--label" for="priority">Priority</label>
+      <select id="priority" name="priority" class="form-control" required>
+        <option value="" selected disabled>Select one...</option>
         <option>10</option>
         <option>9</option>
         <option>8</option>
@@ -16,30 +16,35 @@
         <option>2</option>
         <option>1</option>
       </select>
-		</div>
-		<!-- <div class="col request__query-form--dropdowns">
-			<label class="request__query-form--label" for="location">Location</label>
-			<select id="location" class="form-control">
-        <option selected>Select one...</option>
+    </div>
+    <div class="col request__query-form--dropdowns">
+      <label class="request__query-form--label" for="destination">Destination</label>
+      <select id="destination" name="destination" class="form-control">
+        <option value="SURFSARA_USERDISK">SURFSARA_USERDISK</option>
+        <option value="SDSC_USERDISK">SDSC_USERDISK</option>
+        <option value="LNGS_USERDISK">LNGS_USERDISK</option>
+        <option value="UC_OSG_USERDISK">UC_OSG_USERDISK</option>
+        <option value="UC_DALI_USERDISK" selected>UC_DALI_USERDISK</option>
+        <option value="CNAF_USERDISK">CNAF_USERDISK</option>
       </select>
-		</div> -->
+    </div>
 		<div class="col request__query-form--dropdowns">
 			<label class="request__query-form--label" for="environment">Environment</label>
 			<select id="environment" name="environment" class="form-control" required>
-        <option selected>Select one...</option>
-      </select>
+				<option selected disabled value="">Select one...</option>
+			</select>
 		</div>
 		<div class="col request__query-form--dropdowns">
 			<label class="request__query-form--label" for="context">Context</label>
 			<select id="context" name="context" class="form-control" required>
-        <option selected>Select one...</option>
-      </select>
+				<option selected disabled value="">Select one...</option>
+			</select>
 		</div>
     <div class="col request__query-form--dropdowns">
 			<label class="request__query-form--label" for="type">Type</label>
 			<select id="type" name="type" class="form-control" required>
-        <option selected>Select one...</option>
-      </select>
+				<option selected disabled value="">Select one...</option>
+			</select>
 		</div>
 		<div class="col request__query-form--dropdowns">
 			<label class="request__query-form--label" for="comments">Comments</label>
