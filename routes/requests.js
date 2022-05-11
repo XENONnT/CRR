@@ -55,7 +55,7 @@ router.post('/get-context/:query', ensureAuthenticated, function(req, res) {
 });
 
 router.post('/submit-request', ensureAuthenticated, function(req, res) {
-    var db = req.xenon_db;
+    var db = req.xedocs_db;
     var collection = db.collection('processing_requests');
     var contexts = db.collection('contexts');
     var runs = JSON.parse(req.body.runNumbers);
@@ -104,7 +104,7 @@ router.post('/submit-request', ensureAuthenticated, function(req, res) {
 });
 
 router.post('/get-requests', ensureAuthenticated, function(req,res) {
-    var db = req.xenon_db;
+    var db = req.xedocs_db;
     var collection = db.collection('processing_jobs');
 
     collection.find({}).toArray(function(e, doc) {
