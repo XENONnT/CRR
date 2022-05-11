@@ -15,6 +15,8 @@
 All variables below are required before the website will run properly
 ```
 MONGO_URI=""
+XENONNT_COLLECTION=""
+XEDOCS_COLLECTION=""
 PERSONAL_ACCESS_TOKEN=""
 CALLBACK_URL=""
 GITHUB_CLIENT_ID=""
@@ -27,11 +29,13 @@ ENVS_URL=""
 ERROR_FILE=""
 ```
 #### MongoDB
-`MONGO_URI`: a String with the URI with credentials to access the MongoDB used for most of the processes. This should allow connection to access to every collection needed on this website.
+`MONGO_URI`: a String with the URI with credentials to access the MongoDB used for most of the processes. This should allow connection to access to every collection needed on this website.  
+`XENONNT_COLLECTION`: a String with the name of the database that that has access to the following collections: `users`, `runs`, and `contexts`  
+`XEDOCS_COLLECTION`: a String with the name of the database that has access to the following collections: `processing_requests` and `processing_jobs`
 
 #### LDAP Strategy
 
-The following are the credentials that allow the website to use logging in through LNGS.  
+The following are the credentials that allow the website to use logging in through LNGS.  `
 `LDAP_BIND_DN`: a String  
 `LDAP_BIND_CREDENTIALS`: a String  
 `LDAP_URI`: a String  
